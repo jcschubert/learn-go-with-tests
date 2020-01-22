@@ -73,3 +73,13 @@ The cycle
 ## Switch
 
 * Works as expected, but syntax is rather clean
+
+## Extracting methods
+
+* Can VSCode have refactoring tools like `extract method`?
+
+## Named return value
+
+* Return value doesn't need to be declared in function body
+  * Will be assigned the zero value
+* Needs empty return at the end
