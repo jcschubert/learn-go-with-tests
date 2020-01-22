@@ -14,18 +14,18 @@ func Hello(name, language string) string {
 		name = "World"
 	}
 
-	prefix := ""
+	return getPrefix(language) + name
+}
 
+func getPrefix(language string) string {
 	switch language {
 	case french:
-		prefix = frenchPrefix
+		return frenchPrefix
 	case spanish:
-		prefix = spanishPrefix
+		return spanishPrefix
 	default:
-		prefix = englishPrefix
+		return englishPrefix
 	}
-
-	return prefix + name
 }
 
 func main() {
