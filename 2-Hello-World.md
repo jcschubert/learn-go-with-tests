@@ -69,3 +69,7 @@ The cycle
 * Run the test, see what fails and check the error message is meaningful
 * Write enough code to make the test pass
 * Refactor
+
+## Switch
+
+* Works as expected, but syntax is rather clean
