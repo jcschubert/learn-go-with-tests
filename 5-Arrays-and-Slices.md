@@ -63,3 +63,11 @@ You can create a slice with a specified starting capacity.
     // sums has a starting capacity of 10
     sums := make([]int, 10)
 ```
+
+## append
+
+Usually you don't want to worry about the slice capacity, so you should use `append`
+
+```golang
+    sums = append(sums, Sum(numbers))
+```
