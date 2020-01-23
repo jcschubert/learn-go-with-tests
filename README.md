@@ -7,3 +7,4 @@ These are my personal notes and code as I work through [Learn Go with Tests](htt
 1. [Installation](1-Installation.md)
 2. [Hello World](2-Hello-World.md)
 3. [Integers](3-Integers.md)
+4. [Iteration](4-iteration.md)
