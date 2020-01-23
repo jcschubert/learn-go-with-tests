@@ -71,3 +71,18 @@ Usually you don't want to worry about the slice capacity, so you should use `app
 ```golang
     sums = append(sums, Sum(numbers))
 ```
+
+## slicing slices
+
+Slices can be sliced into parts, the syntax is similiar to Python's.
+
+```golang
+    // syntax slice[start:end] -> slice[start] included, slice[end] not 
+    numbers := []int{0,1,2,3,4,5,6}
+    slice1 := numbers[1:3]
+    slice2 := numbers[3:5]
+    fmt.Printf("Sliced: %v and %v", slice1, slice2)
+    // Output: Sliced: [1 2] and [3 4]
+```
+
+Careful, slicing out of bounds is going to produce a runtime error.
