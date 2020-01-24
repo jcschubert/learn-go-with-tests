@@ -1,6 +1,9 @@
 package wallet
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Bitcoin represents an amount of bitcoin.
 type Bitcoin int
@@ -25,8 +28,13 @@ func (w *Wallet) Balance() Bitcoin {
 }
 
 // Withdraw withdraws the shown amount from the Wallet
-func (w *Wallet) Withdraw(amount Bitcoin) {
+func (w *Wallet) Withdraw(amount Bitcoin) error {
+	if amount > w.balance {
+		return errors.New("Withdrawal amount exceeds balance")
+	}
+
 	w.balance -= amount
+	return nil
 }
 
 // Stringer allows us to convert a type to a string
