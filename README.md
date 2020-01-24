@@ -9,3 +9,4 @@ These are my personal notes and code as I work through [Learn Go with Tests](htt
 3. [Integers](3-Integers.md)
 4. [Iteration](4-Iteration.md)
 5. [Arrays and Slices](5-Arrays-and-Slices.md)
+6. [Structs, Methods and Interfaces](6-Structs-Methods-and-Interfaces.md)
