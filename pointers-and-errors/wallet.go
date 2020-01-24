@@ -12,6 +12,9 @@ func (b Bitcoin) String() string {
 	return fmt.Sprintf("%d BTC", b)
 }
 
+// ErrInsufficientFunds that is returned if balance is insufficient for a withdrawal from a wallet
+var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
+
 // Wallet represents a Bitcoin wallet.
 type Wallet struct {
 	balance Bitcoin
@@ -30,7 +33,7 @@ func (w *Wallet) Balance() Bitcoin {
 // Withdraw withdraws the shown amount from the Wallet
 func (w *Wallet) Withdraw(amount Bitcoin) error {
 	if amount > w.balance {
-		return errors.New("Withdrawal amount exceeds balance")
+		return ErrInsufficientFunds
 	}
 
 	w.balance -= amount
