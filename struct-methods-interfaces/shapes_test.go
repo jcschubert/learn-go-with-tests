@@ -1,6 +1,9 @@
 package shapes
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 func AssertFloat(t *testing.T, got float64, want float64) {
 	t.Helper()
@@ -17,8 +20,16 @@ func TestPerimeter(t *testing.T) {
 }
 
 func TestArea(t *testing.T) {
-	r := Rectangle{10.0, 10.0}
-	got := Area(r)
-	want := 100.0
-	AssertFloat(t, got, want)
+	t.Run("rectangles", func(t *testing.T) {
+		r := Rectangle{10.0, 10.0}
+		got := r.Area()
+		want := 100.0
+		AssertFloat(t, got, want)
+	})
+	t.Run("circles", func(t *testing.T) {
+		c := Circle{10}
+		got := c.Area()
+		want := math.Pi * 10 * 10
+		AssertFloat(t, got, want)
+	})
 }
