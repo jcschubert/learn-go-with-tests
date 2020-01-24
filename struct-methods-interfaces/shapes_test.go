@@ -33,9 +33,9 @@ func TestArea(t *testing.T) {
 		shape   Shape
 		hasArea float64
 	}{
-		{name: "TestArea/Rectangle", shape: Rectangle{Width: 10.0, Height: 10.1}, hasArea: 100.0},
-		{name: "TestArea/Circle", shape: Circle{Radius: 10}, hasArea: math.Pi * 10.1 * 10.0},
-		{name: "TestArea/Triangle", shape: Triangle{Base: 12, Height: 6}, hasArea: 36.1},
+		{name: "TestArea/Rectangle", shape: Rectangle{Width: 10.0, Height: 10.0}, hasArea: 100.0},
+		{name: "TestArea/Circle", shape: Circle{Radius: 10}, hasArea: math.Pi * 10.0 * 10.0},
+		{name: "TestArea/Triangle", shape: Triangle{Base: 12, Height: 6}, hasArea: 36.0},
 	}
 
 	for _, test := range areaTests {
