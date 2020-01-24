@@ -2,20 +2,23 @@ package shapes
 
 import "testing"
 
-func TestPerimeter(t *testing.T) {
-	got := Perimeter(10.0, 10.0)
-	want := 40.0
-
+func AssertFloat(t *testing.T, got float64, want float64) {
+	t.Helper()
 	if got != want {
 		t.Errorf("got %.2f want %.2f", got, want)
 	}
 }
 
-func TestArea(t *testing.T) {
-	got := Area(10.0, 10.0)
-	want := 100.0
+func TestPerimeter(t *testing.T) {
+	r := Rectangle{10.0, 10.0}
+	got := Perimeter(r)
+	want := 40.0
+	AssertFloat(t, got, want)
+}
 
-	if got != want {
-		t.Errorf("got %.2f want %.2f", got, want)
-	}
+func TestArea(t *testing.T) {
+	r := Rectangle{10.0, 10.0}
+	got := Area(r)
+	want := 100.0
+	AssertFloat(t, got, want)
 }

@@ -1,13 +1,17 @@
 package shapes
 
-// Perimeter calculates the perimeter of the rectangle defined
-// by width and height
-func Perimeter(width, height float64) float64 {
-	return 2 * (width + height)
+// Rectangle describes a rectangle by its width and height.
+type Rectangle struct {
+	Width  float64
+	Height float64
 }
 
-// Area calculates the area of the rectangle defined
-// by width and height
-func Area(width, height float64) float64 {
-	return width * height
+// Perimeter calculates the perimeter of the rectangle r
+func Perimeter(r Rectangle) float64 {
+	return 2 * (r.Width + r.Height)
+}
+
+// Area calculates the area of the rectangle r
+func Area(r Rectangle) float64 {
+	return r.Width * r.Height
 }
