@@ -10,8 +10,8 @@ func assertString(t *testing.T, got, want string) {
 }
 
 func TestSearch(t *testing.T) {
-	dictionary := map[string]string{"test": "this is just a test"}
-	got := Search(dictionary, "test")
+	dict := Dictionary{"test": "this is just a test"}
+	got := dict.Search("test")
 	want := "this is just a test"
 	assertString(t, got, want)
 }
