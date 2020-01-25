@@ -18,6 +18,12 @@ func (d Dictionary) Search(word string) (string, error) {
 	return definition, nil
 }
 
+//Add adds the provided string under the defined word
+func (d Dictionary) Add(word, definition string) error {
+	d[word] = definition
+	return nil
+}
+
 // Search returns the map[word] from the given map
 func Search(dict map[string]string, word string) string {
 	return dict[word]
