@@ -60,6 +60,11 @@ func (d Dictionary) Update(word, definition string) error {
 	return nil
 }
 
+// Delete deletes an existing word.
+func (d Dictionary) Delete(word string) {
+	delete(d, word)
+}
+
 // Search returns the map[word] from the given map
 func Search(dict map[string]string, word string) string {
 	return dict[word]
