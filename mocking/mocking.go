@@ -15,31 +15,25 @@ type Sleeper interface {
 	Sleep()
 }
 
-// DefaultSleeper wraps time.Sleep in an attached method
-type DefaultSleeper struct {
-}
-
 // ConfigurableSleeper allows us to configure the duration
 type ConfigurableSleeper struct {
 	duration time.Duration
 	sleep    func(time.Duration)
 }
 
+// Sleep uses the configured sleep function to sleep
 func (c *ConfigurableSleeper) Sleep() {
 	c.sleep(c.duration)
 }
 
+// SpyTime allows us to spy on the  slept time
 type SpyTime struct {
 	durationSlept time.Duration
 }
 
+// Sleep updates SpyTimes sleep duration
 func (s *SpyTime) Sleep(duration time.Duration) {
 	s.durationSlept = duration
-}
-
-// Sleep just calls sleep
-func (s *DefaultSleeper) Sleep() {
-	time.Sleep(1 * time.Second)
 }
 
 const write = "write"
@@ -74,6 +68,6 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 }
 
 func main() {
-	s := &DefaultSleeper{}
+	s := &ConfigurableSleeper{1 * time.Second, time.Sleep}
 	Countdown(os.Stdout, s)
 }
