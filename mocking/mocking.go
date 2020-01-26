@@ -9,7 +9,10 @@ import (
 // Countdown counts down and prints messages, waiting
 // 1 second between each message
 func Countdown(out io.Writer) {
-	fmt.Fprintf(out, "3")
+	for i := 3; i > 0; i-- {
+		fmt.Fprintln(out, i)
+	}
+	fmt.Fprintf(out, "Go!")
 }
 
 func main() {
