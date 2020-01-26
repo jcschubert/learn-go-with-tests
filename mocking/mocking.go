@@ -29,9 +29,28 @@ type SpySleeper struct {
 	NumCalls int
 }
 
-//
+// Sleep allows us to track the amount of calls to it
 func (s *SpySleeper) Sleep() {
 	s.NumCalls++
+}
+
+const write = "write"
+const sleep = "sleep"
+
+// CountdownOperationsSpy allows us to spy on both Sleep() and what is written
+type CountdownOperationsSpy struct {
+	Calls []string
+}
+
+// Sleep tracks sleep calls (implements Sleeper)
+func (s *CountdownOperationsSpy) Sleep() {
+	s.Calls = append(s.Calls, sleep)
+}
+
+// Write tracks write calls (implements io.Writer)
+func (s *CountdownOperationsSpy) Write(p []byte) (n int, err error) {
+	s.Calls = append(s.Calls, write)
+	return
 }
 
 // Countdown counts down and prints messages, waiting
@@ -41,6 +60,7 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 		sleeper.Sleep()
 		fmt.Fprintln(out, i)
 	}
+
 	sleeper.Sleep()
 	fmt.Fprintf(out, finalWord)
 }
