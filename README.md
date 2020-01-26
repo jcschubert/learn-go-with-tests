@@ -12,3 +12,4 @@ These are my personal notes and code as I work through [Learn Go with Tests](htt
 6. [Structs, Methods and Interfaces](6-Structs-Methods-and-Interfaces.md)
 7. [Pointers and Errors](7-pointers-and-errors.md)
 8. [Maps](8-maps.md)
+9. [Dependency Injection](9-dependency-injection.md)
