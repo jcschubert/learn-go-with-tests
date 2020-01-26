@@ -1,9 +1,17 @@
 package maps
 
-import "errors"
-
 // ErrNotFound should be used if a key in the dict couldn't be found
-var ErrNotFound = errors.New("could not find the word you were looking for")
+const ErrNotFound = DictErr("could not find the word you were looking for")
+
+// ErrWordExists should be used if a key that is to be added already exists in the dict
+const ErrWordExists = DictErr("cannot add word because it already exists")
+
+// DictErr is a type relating to dictionaries
+type DictErr string
+
+func (e DictErr) Error() string {
+	return string(e)
+}
 
 // Dictionary represents a dictionary of words, accessible by index.
 type Dictionary map[string]string
@@ -20,8 +28,22 @@ func (d Dictionary) Search(word string) (string, error) {
 
 //Add adds the provided string under the defined word
 func (d Dictionary) Add(word, definition string) error {
-	d[word] = definition
+	_, err := d.Search(word)
+
+	switch err {
+	case ErrNotFound:
+		d[word] = definition
+	case nil:
+		return ErrWordExists
+	default:
+		return err
+	}
 	return nil
+}
+
+// Update replaces an existing definition existing under 'word' with a new one.
+func (d Dictionary) Update(word, definition string) {
+	d[word] = definition
 }
 
 // Search returns the map[word] from the given map
