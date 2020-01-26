@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
-	"os"
+	"net/http"
 )
 
 // Greet writes a personalized greeting to stdout
@@ -11,6 +11,11 @@ func Greet(writer io.Writer, name string) {
 	fmt.Fprintf(writer, "Hello, %s", name)
 }
 
+// MyGreeterHandler just plugs in Greet to an http server
+func MyGreeterHandler(w http.ResponseWriter, r *http.Request) {
+	Greet(w, "world")
+}
+
 func main() {
-	Greet(os.Stdout, "Elodie")
+	http.ListenAndServe(":5000", http.HandlerFunc(MyGreeterHandler))
 }
