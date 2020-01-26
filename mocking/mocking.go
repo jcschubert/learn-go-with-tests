@@ -24,16 +24,6 @@ func (s *DefaultSleeper) Sleep() {
 	time.Sleep(1 * time.Second)
 }
 
-// SpySleeper tracks the number of calls to it.
-type SpySleeper struct {
-	NumCalls int
-}
-
-// Sleep allows us to track the amount of calls to it
-func (s *SpySleeper) Sleep() {
-	s.NumCalls++
-}
-
 const write = "write"
 const sleep = "sleep"
 
