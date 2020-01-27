@@ -15,20 +15,21 @@ func TestRacer(t *testing.T) {
 		fastHTTP := makeDelayedServer(0 * time.Millisecond)
 		defer fastHTTP.Close()
 
-		got, _ := Racer(slowHTTP.URL, fastHTTP.URL)
+		got, err := Racer(slowHTTP.URL, fastHTTP.URL)
+
+		if err != nil {
+			t.Fatalf("did not expect an error, got one %v", err)
+		}
 
 		if got != fastHTTP.URL {
 			t.Errorf("got %q, want %q", got, fastHTTP.URL)
 		}
 	})
 	t.Run("returns an error if a server doesn't respond within 10s", func(t *testing.T) {
-		serverA := makeDelayedServer(11 * time.Second)
-		defer serverA.Close()
+		server := makeDelayedServer(11 * time.Second)
+		defer server.Close()
 
-		serverB := makeDelayedServer(12 * time.Second)
-		defer serverB.Close()
-
-		_, err := Racer(serverA.URL, serverB.URL)
+		_, err := ConfigurableRacer(server.URL, server.URL, 20*time.Millisecond)
 
 		if err == nil {
 			t.Error("expected an error but didn't get one")
