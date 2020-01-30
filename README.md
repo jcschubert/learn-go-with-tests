@@ -14,4 +14,7 @@ These are my personal notes and code as I work through [Learn Go with Tests](htt
 8. [Maps](8-maps.md)
 9. [Dependency Injection](9-dependency-injection.md)
 10. [Mocking](10-Mocking.md)
-11. [Reflection](11-Reflection.md)
+11. [Concurrency](11-concurrency.md)
+12. [Select](12-select.md)
+13. [Reflection](13-Reflection.md)
+14. [Sync](14-sync.md)
