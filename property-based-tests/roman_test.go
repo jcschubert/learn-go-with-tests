@@ -3,6 +3,7 @@ package romanLiterals
 import (
 	"fmt"
 	"testing"
+	"testing/quick"
 )
 
 // Strings for formatting test messages
@@ -15,7 +16,7 @@ const (
 )
 
 type RomanLiteralCases struct {
-	Arabic int
+	Arabic uint16
 	Roman  string
 }
 
@@ -55,7 +56,7 @@ func TestRomanNumerals(t *testing.T) {
 	runCases(t, cases, ConvertToRoman)
 }
 
-func runCases(t *testing.T, cases []RomanLiteralCases, f func(int) string) {
+func runCases(t *testing.T, cases []RomanLiteralCases, f func(uint16) string) {
 	for _, test := range cases {
 		t.Run(fmt.Sprintf(convertArabicToRoman, test.Arabic, test.Roman), func(t *testing.T) {
 			got := f(test.Arabic)
@@ -74,5 +75,21 @@ func TestConvertToArabic(t *testing.T) {
 				t.Errorf(convertRomanToArabicFailed, got, test.Arabic)
 			}
 		})
+	}
+}
+
+func TestPropertiesOfConversion(t *testing.T) {
+	assertion := func(arabic uint16) bool {
+		if arabic > 3999 {
+			return true
+		}
+		t.Log("testing", arabic)
+		roman := ConvertToRoman(arabic)
+		fromRoman := ConvertToArabic(roman)
+		return fromRoman == arabic
+	}
+
+	if err := quick.Check(assertion, nil); err != nil {
+		t.Error("failed checks", err)
 	}
 }
