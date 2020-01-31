@@ -1,8 +1,8 @@
 package clockface
 
-import(
-	"time"
+import (
 	"math"
+	"time"
 )
 
 // A Point represents a 2D Cartesian Coordinate
@@ -18,5 +18,5 @@ func SecondHand(t time.Time) Point {
 }
 
 func secondsInRadians(t time.Time) float64 {
-	return math.Pi 
+	return float64(t.Second()) * (math.Pi / 30)
 }
