@@ -1,8 +1,8 @@
 package clockface
 
 import (
-	"io"
 	"fmt"
+	"io"
 	"math"
 	"time"
 )
@@ -30,8 +30,8 @@ const (
     	viewBox="0 0 300 300"
 		version="2.0">`
 	secondHand = `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#f00;stroke-width:3px;"/>`
-	bezel = `<circle cx="150" cy="150" r="100" style="fill:#fff;stroke:#000;stroke-width:5px;"/>`
-	svgEnd = `</svg>`
+	bezel      = `<circle cx="150" cy="150" r="100" style="fill:#fff;stroke:#000;stroke-width:5px;"/>`
+	svgEnd     = `</svg>`
 )
 
 func SVGWriter(w io.Writer, t time.Time) {
