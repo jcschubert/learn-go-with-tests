@@ -29,6 +29,7 @@ func TestRomanNumerals(t *testing.T) {
 		{"49 gets converted to XLIX", 49, "XLIX"},
 		{"50 gets converted to L", 50, "L"},
 		{"100 gets converted to C", 100, "C"},
+		{"90 gets converted to XC", 90, "XC"},
 	}
 
 	testCases(t, cases, ConvertToRoman)
