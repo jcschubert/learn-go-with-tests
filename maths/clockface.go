@@ -55,9 +55,9 @@ func MinuteHand(w io.Writer, t time.Time) {
 }
 
 func makeHand(p Point, length float64) Point {
-	p = Point{p.X * length, p.Y * length}                     // scale 
-	p = Point{p.X, -p.Y}                                      // flip
-	return Point{p.X + clockCentreX, p.Y + clockCentreY}	  // translate
+	p = Point{p.X * length, p.Y * length}                // scale
+	p = Point{p.X, -p.Y}                                 // flip
+	return Point{p.X + clockCentreX, p.Y + clockCentreY} // translate
 }
 
 func secondHandPoint(t time.Time) Point {
@@ -85,5 +85,6 @@ func minutesInRadians(t time.Time) float64 {
 }
 
 func hoursInRadians(t time.Time) float64 {
-	return (math.Pi / (6 / float64(t.Hour() % 12))) 
+	return (minutesInRadians(t) / 12) +
+		(math.Pi / (6 / float64(t.Hour()%12)))
 }
