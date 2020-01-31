@@ -4,12 +4,11 @@ import (
 	"math"
 	"testing"
 	"time"
-	//"github.com/gypsydave5/learn-go-with-tests/math/v1/clockface"
 )
 
-func TestSecondHandAt30Seconds(t *testing.T) {
+func TestSecondPoint(t *testing.T) {
 	cases := []struct {
-		time time.Time
+		time  time.Time
 		point Point
 	}{
 		{simpleTime(0, 0, 30), Point{0, -1}},
@@ -56,10 +55,10 @@ func testName(t time.Time) string {
 }
 
 func withinTolerance(a float64, b float64, delta float64) bool {
-	return math.Abs(a - b) < delta
+	return math.Abs(a-b) < delta
 }
 
 func pointWithinTolerance(a Point, b Point, delta float64) bool {
-	return math.Abs(a.X - b.X) < delta &&
-	math.Abs(a.Y - b.Y) < delta
+	return math.Abs(a.X-b.X) < delta &&
+		math.Abs(a.Y-b.Y) < delta
 }
