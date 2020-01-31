@@ -17,9 +17,19 @@ type Point struct {
 const (
 	secondHandLength = 90
 	minuteHandLength = 80
-	hourHandLength = 50 
+	hourHandLength   = 50
 	clockCentreX     = 150
 	clockCentreY     = 150
+)
+
+// Time constants
+const (
+	secondsInHalfClock = 30
+	secondsInClock     = 2 * secondsInHalfClock
+	minutesInHalfClock = 30
+	minutesInClock     = 2 * minutesInHalfClock
+	hoursInHalfClock   = 6
+	hoursInClock       = 2 * hoursInHalfClock
 )
 
 // SVG snippets
@@ -88,15 +98,15 @@ func angleToPoint(angle float64) Point {
 }
 
 func secondsInRadians(t time.Time) float64 {
-	return float64(t.Second()) * (math.Pi / 30)
+	return float64(t.Second()) * (math.Pi / secondsInHalfClock)
 }
 
 func minutesInRadians(t time.Time) float64 {
-	return (secondsInRadians(t) / 60) +
-		(math.Pi / (30 / float64(t.Minute())))
+	return (secondsInRadians(t) / minutesInClock) +
+		(math.Pi / (minutesInHalfClock / float64(t.Minute())))
 }
 
 func hoursInRadians(t time.Time) float64 {
-	return (minutesInRadians(t) / 12) +
-		(math.Pi / (6 / float64(t.Hour()%12)))
+	return (minutesInRadians(t) / hoursInClock) +
+		(math.Pi / (hoursInHalfClock / float64(t.Hour()%hoursInClock)))
 }
