@@ -45,19 +45,19 @@ func SVGWriter(w io.Writer, t time.Time) {
 }
 
 func SecondHand(w io.Writer, t time.Time) {
-	p := secondHandPoint(t)
-	p = Point{p.X * secondHandLength, p.Y * secondHandLength} // translate
-	p = Point{p.X, -p.Y}                                      // flip
-	p = Point{p.X + clockCentreX, p.Y + clockCentreY}         // translate
+	p := makeHand(secondHandPoint(t), secondHandLength)
 	fmt.Fprintf(w, secondHand, p.X, p.Y)
 }
 
 func MinuteHand(w io.Writer, t time.Time) {
-	p := minuteHandPoint(t)
-	p = Point{p.X * minuteHandLength, p.Y * minuteHandLength} // translate
-	p = Point{p.X, -p.Y}                                      // flip
-	p = Point{p.X + clockCentreX, p.Y + clockCentreY}         // translate
+	p := makeHand(minuteHandPoint(t), minuteHandLength)
 	fmt.Fprintf(w, minuteHand, p.X, p.Y)
+}
+
+func makeHand(p Point, length float64) Point {
+	p = Point{p.X * length, p.Y * length}                     // scale 
+	p = Point{p.X, -p.Y}                                      // flip
+	return Point{p.X + clockCentreX, p.Y + clockCentreY}	  // translate
 }
 
 func secondHandPoint(t time.Time) Point {
