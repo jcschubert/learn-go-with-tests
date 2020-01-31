@@ -114,7 +114,6 @@ func TestSVGWriterHourHand(t *testing.T) {
 	}
 }
 */
-
 func containsLine(line Line, lines []Line) bool {
 	for _, l := range lines {
 		if l == line {
