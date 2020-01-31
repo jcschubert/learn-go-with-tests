@@ -67,7 +67,7 @@ func runCases(t *testing.T, cases []RomanLiteralCases, f func(int) string) {
 }
 
 func TestConvertToArabic(t *testing.T) {
-	for _, test := range cases[:5] {
+	for _, test := range cases {
 		t.Run(fmt.Sprintf(convertRomanToArabic, test.Roman, test.Arabic), func(t *testing.T) {
 			got := ConvertToArabic(test.Roman)
 			if got != test.Arabic {
