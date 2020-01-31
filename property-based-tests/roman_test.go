@@ -34,6 +34,11 @@ func TestRomanNumerals(t *testing.T) {
 		{"500 gets converted to D", 500, "D"},
 		{"900 gets converted to CM", 900, "CM"},
 		{"1000 gets converted to M", 1000, "M"},
+		{"1984 gets converted to MCMLXXXIV", 1984, "MCMLXXXIV"},
+		{"3999 gets converted to MMMCMXCIX", 3999, "MMMCMXCIX"},
+		{"2014 gets converted to MMXIV", 2014, "MMXIV"},
+		{"1006 gets converted to MVI", 1006, "MVI"},
+		{"798 gets converted to DCCXCVIII", 798, "DCCXCVIII"},
 	}
 
 	testCases(t, cases, ConvertToRoman)
