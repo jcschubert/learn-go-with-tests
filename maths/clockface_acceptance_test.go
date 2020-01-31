@@ -31,22 +31,41 @@ type Line struct {
 	Y2 float64 `xml:"y2,attr"`
 }
 
-func TestSVGWriterAtMidnight(t *testing.T) {
-	tm := time.Date(1337, time.January, 1, 0, 0, 0, 0, time.UTC)
-	b := bytes.Buffer{}
-
-	SVGWriter(&b, tm)
-
-	svg := SVG{}
-	xml.Unmarshal(b.Bytes(), &svg)
-
-	want := Line{150, 150, 150, 60}
-
-	for _, line := range svg.Line {
-		if line == want {
-			return
-		}
+func TestSVGWriterSecondHand(t *testing.T) {
+	cases := []struct {
+		time time.Time
+		line Line
+	}{
+		{
+			simpleTime(0, 0, 0),
+			Line{150, 150, 150, 60},
+		},
+		{
+			simpleTime(0, 0, 30),
+			Line{150, 150, 150, 240},
+		},
 	}
 
-	t.Errorf("expected to find the second hand line %+v, in the SVG lines %v", want, svg.Line)
+	for _, c := range cases {
+		t.Run(testName(c.time), func(t *testing.T) {
+			b := bytes.Buffer{}
+			SVGWriter(&b, c.time)
+
+			svg := SVG{}
+			xml.Unmarshal(b.Bytes(), &svg)
+
+			if !containsLine(c.line, svg.Line) {
+				t.Errorf("expected to find the second hand line %+v, in the SVG lines %v", c.line, svg.Line)
+			}
+		})
+	}
+}
+
+func containsLine(line Line, lines []Line) bool {
+	for _, l := range lines {
+		if l == line {
+			return true
+		}
+	}
+	return false
 }
