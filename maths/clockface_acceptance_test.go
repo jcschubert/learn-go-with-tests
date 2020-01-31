@@ -87,7 +87,6 @@ func TestSVGWriterMinuteHand(t *testing.T) {
 	}
 }
 
-/*
 func TestSVGWriterHourHand(t *testing.T) {
 	cases := []struct {
 		time time.Time
@@ -113,7 +112,7 @@ func TestSVGWriterHourHand(t *testing.T) {
 		})
 	}
 }
-*/
+
 func containsLine(line Line, lines []Line) bool {
 	for _, l := range lines {
 		if l == line {
