@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestSecondPoint(t *testing.T) {
+func TestSecondHandPoint(t *testing.T) {
 	cases := []struct {
 		time  time.Time
 		point Point
@@ -20,6 +20,24 @@ func TestSecondPoint(t *testing.T) {
 			got := secondHandPoint(c.time)
 			if !pointWithinTolerance(got, c.point, 0.00001) {
 				t.Fatalf("Wanted %v Point, but got %v", c.point, got)
+			}
+		})
+	}
+}
+
+func TestMinuteHandPoint(t *testing.T) {
+	cases := []struct {
+		time  time.Time
+		point Point
+	}{
+		{simpleTime(0, 30, 0), Point{0, -1}},
+	}
+
+	for _, c := range cases {
+		t.Run(testName(c.time), func(t *testing.T) {
+			got := minuteHandPoint(c.time)
+			if !pointWithinTolerance(got, c.point, 0.00001) {
+				t.Fatalf("Wanted %v Point, but got %v ", c.point, got)
 			}
 		})
 	}
@@ -48,7 +66,7 @@ func TestSecondsInRadians(t *testing.T) {
 
 func TestMinutesInRadians(t *testing.T) {
 	cases := []struct {
-		time time.Time
+		time  time.Time
 		angle float64
 	}{
 		{simpleTime(0, 30, 0), math.Pi},
