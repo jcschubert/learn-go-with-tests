@@ -50,15 +50,14 @@ func SecondHand(w io.Writer, t time.Time) {
 }
 
 func secondHandPoint(t time.Time) Point {
-	angle := secondsInRadians(t)
-	x := math.Sin(angle)
-	y := math.Cos(angle)
-
-	return Point{x, y}
+	return angleToPoint(secondsInRadians(t))
 }
 
 func minuteHandPoint(t time.Time) Point {
-	angle := minutesInRadians(t)
+	return angleToPoint(minutesInRadians(t))
+}
+
+func angleToPoint(angle float64) Point {
 	x := math.Sin(angle)
 	y := math.Cos(angle)
 
