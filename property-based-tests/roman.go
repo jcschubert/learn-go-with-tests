@@ -36,6 +36,16 @@ func (r RomanNumerals) ValueOf(symbols ...byte) int {
 	return 0
 }
 
+func (r RomanNumerals) hasRule(symbols ...byte) bool {
+	symbol := string(symbols)
+	for _, s := range r {
+		if s.Symbol == symbol {
+			return true
+		}
+	}
+	return false
+}
+
 func ConvertToRoman(arabic int) string {
 
 	var result strings.Builder
@@ -54,28 +64,17 @@ func ConvertToArabic(roman string) int {
 	total := 0
 
 	for i := 0; i < len(roman); i++ {
-		symbol := roman[i]
+		value := 0
 
-		if couldBeSubtractive(i, symbol, roman) {
-
-			// get the value of the two character string
-			value := romanNumerals.ValueOf(symbol, roman[i+1])
-
-			if value != 0 {
-				total += value
-				i++ // move past this character for the next loop
-			} else {
-				total += romanNumerals.ValueOf(symbol)
-			}
+		if i+1 <len(roman) && romanNumerals.hasRule(roman[i], roman[i+1]) {
+			value = romanNumerals.ValueOf(roman[i], roman[i+1])
+			i++
 		} else {
-			total += romanNumerals.ValueOf(symbol)
+			value = romanNumerals.ValueOf(roman[i])
 		}
+
+		total += value
 	}
 
 	return total
-}
-
-func couldBeSubtractive(index int, currentSymbol uint8, roman string) bool {
-	isSubtractiveSymbol := currentSymbol == 'I' || currentSymbol == 'X' || currentSymbol == 'C'
-	return index+1 < len(roman) && isSubtractiveSymbol
 }
