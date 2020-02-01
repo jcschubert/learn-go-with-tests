@@ -1,4 +1,4 @@
-package buildingawebapp
+package playerserver
 
 import (
 	"fmt"
