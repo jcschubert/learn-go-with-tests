@@ -7,10 +7,15 @@ import (
 	"github.com/jcschubert/learn-go-with-tests/server/playerserver"
 )
 
-func main() {
-	handler := http.HandlerFunc(playerserver.PlayerServer)
+type InMemoryPlayerStore struct{}
 
-	if err := http.ListenAndServe(":5000", handler); err != nil {
+func (s *InMemoryPlayerStore) GetPlayerScore(name string) int {
+	return 123
+}
+
+func main() {
+	server := &playerserver.PlayerServer{&InMemoryPlayerStore{}}
+	if err := http.ListenAndServe(":5000", server); err != nil {
 		log.Fatalf("Could not listen on port 5000%v", err)
 	}
 }
