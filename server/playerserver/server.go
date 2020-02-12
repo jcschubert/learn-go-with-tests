@@ -16,8 +16,12 @@ type PlayerServer struct {
 
 // PlayerServer returns the amount of the player's wins as a string
 // Example return values: "20", "0", "123"
+// returns status 404 if player not found
 func (p *PlayerServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	player := strings.TrimPrefix(r.URL.Path, "/players/")
+
+	w.WriteHeader(http.StatusNotFound)
+
 	fmt.Fprint(w, p.Store.GetPlayerScore(player))
 }
 
