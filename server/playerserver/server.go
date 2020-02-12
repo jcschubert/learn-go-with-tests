@@ -42,17 +42,3 @@ func (p *PlayerServer) processWin(w http.ResponseWriter) {
 	p.Store.RecordWin("Bob")
 	w.WriteHeader(http.StatusAccepted)
 }
-
-// GetPlayerScore returns the score for the provided player name.
-// If there is no such player, it returns an empty string.
-func GetPlayerScore(name string) string {
-	if name == "Pepper" {
-		return "20"
-	}
-
-	if name == "Floyd" {
-		return "10"
-	}
-
-	return ""
-}
