@@ -1,9 +1,12 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/jcschubert/learn-go-with-tests/server/store"
 )
 
 type PlayerStore interface {
@@ -30,6 +33,7 @@ func NewPlayerServer(store PlayerStore) *PlayerServer {
 }
 
 func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(p.getLeagueTable)
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -41,6 +45,12 @@ func (p *PlayerServer) playersHandler(w http.ResponseWriter, r *http.Request) {
 		p.processWin(w, player)
 	case http.MethodGet:
 		p.showScore(w, player)
+	}
+}
+
+func (p *PlayerServer) getLeagueTable() []store.Player {
+	return []store.Player{
+		{"Chris", 20},
 	}
 }
 
