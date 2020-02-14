@@ -1,9 +1,12 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/jcschubert/learn-go-with-tests/server/store"
 )
 
 type PlayerStore interface {
@@ -30,6 +33,10 @@ func NewPlayerServer(store PlayerStore) *PlayerServer {
 }
 
 func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
+	leagueTable := []store.Player{
+		{"Chris", 20},
+	}
+	json.NewEncoder(w).Encode(leagueTable)
 	w.WriteHeader(http.StatusOK)
 }
 
