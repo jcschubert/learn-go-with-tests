@@ -1,10 +1,12 @@
-package playerserver
+package server
 
 import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/jcschubert/learn-go-with-tests/server/store"
 )
 
 type StubPlayerStore struct {
@@ -122,7 +124,7 @@ func newPostWinRequest(name string) *http.Request {
 }
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
-	store := NewInMemoryPlayerStore()
+	store := store.NewInMemoryPlayerStore()
 	server := PlayerServer{store}
 	player := "Pepper"
 
@@ -135,4 +137,19 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 	assertStatus(t, response.Code, http.StatusOK)
 
 	assertResponseBody(t, response.Body.String(), "3")
+}
+
+func TestLeague(t *testing.T) {
+	store := StubPlayerStore{}
+	server := &PlayerServer{&store}
+
+	t.Run("it returns 200 on /league", func(t *testing.T) {
+		request, _ := http.NewRequest(http.MethodGet, "/league", nil)
+		response := httptest.NewRecorder()
+
+		server.ServeHTTP(response, request)
+
+		assertStatus(t, response.Code, http.StatusOK)
+	})
+
 }
