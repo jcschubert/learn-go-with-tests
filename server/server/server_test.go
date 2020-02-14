@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 
 	"github.com/jcschubert/learn-go-with-tests/server/store"
@@ -13,6 +14,7 @@ import (
 type StubPlayerStore struct {
 	scores   map[string]int
 	winCalls []string
+	league   []store.Player
 }
 
 func (s *StubPlayerStore) GetPlayerScore(name string) int {
@@ -24,12 +26,17 @@ func (s *StubPlayerStore) RecordWin(name string) {
 	s.winCalls = append(s.winCalls, name)
 }
 
+func (s *StubPlayerStore) GetLeague() []store.Player {
+	return s.league
+}
+
 func TestGETPlayers(t *testing.T) {
 	store := StubPlayerStore{
 		map[string]int{
 			"Pepper": 20,
 			"Floyd":  10,
 		},
+		nil,
 		nil,
 	}
 
@@ -88,6 +95,7 @@ func TestStoreWins(t *testing.T) {
 	store := StubPlayerStore{
 		map[string]int{},
 		nil,
+		nil,
 	}
 
 	server := NewPlayerServer(&store)
@@ -141,10 +149,17 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 }
 
 func TestLeague(t *testing.T) {
-	stubStore := StubPlayerStore{}
-	server := NewPlayerServer(&stubStore)
 
-	t.Run("it returns 200 on /league", func(t *testing.T) {
+	t.Run("it returns the league table as json", func(t *testing.T) {
+		wantedLeague := []store.Player{
+			{"Cleo", 32},
+			{"Chris", 20},
+			{"Tiest", 14},
+		}
+
+		stubStore := StubPlayerStore{nil, nil, wantedLeague}
+		server := NewPlayerServer(&stubStore)
+
 		request, _ := http.NewRequest(http.MethodGet, "/league", nil)
 		response := httptest.NewRecorder()
 
@@ -159,6 +174,10 @@ func TestLeague(t *testing.T) {
 		}
 
 		assertStatus(t, response.Code, http.StatusOK)
+
+		if !reflect.DeepEqual(got, wantedLeague) {
+			t.Errorf("got %v want %v", got, wantedLeague)
+		}
 	})
 
 }

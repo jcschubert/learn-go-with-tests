@@ -23,3 +23,7 @@ func (s *InMemoryPlayerStore) RecordWin(name string) {
 	defer s.mutex.Unlock()
 	s.store[name]++
 }
+
+func (s *InMemoryPlayerStore) GetLeague() []Player {
+	return nil
+}
