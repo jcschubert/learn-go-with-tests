@@ -1,7 +1,6 @@
 package store
 
 import (
-	"encoding/json"
 	"io"
 	"sync"
 )
@@ -41,7 +40,6 @@ type FileSystemStore struct {
 }
 
 func (f *FileSystemStore) GetLeague() []Player {
-	var league []Player
-	json.NewDecoder(f.Database).Decode(&league)
+	league, _ := NewLeague(f.Database)
 	return league
 }

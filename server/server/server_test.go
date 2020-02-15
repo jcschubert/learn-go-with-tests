@@ -1,7 +1,6 @@
 package server
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -182,7 +181,7 @@ func TestLeague(t *testing.T) {
 
 		var got []store.Player
 
-		err := json.NewDecoder(response.Body).Decode(&got)
+		got, err := store.NewLeague(response.Body)
 
 		if err != nil {
 			t.Fatalf("Unable to parse response from server %q into splice of Player, '%v'", response.Body, err)
@@ -197,7 +196,7 @@ func TestLeague(t *testing.T) {
 
 func getLeagueFromResponse(t *testing.T, body io.Reader) (league []store.Player) {
 	t.Helper()
-	err := json.NewDecoder(body).Decode(&league)
+	league, err := store.NewLeague(body)
 
 	if err != nil {
 		t.Fatalf("Unable to parse response from server %q into slice of Player, '%v'", body, err)
