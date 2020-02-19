@@ -36,7 +36,7 @@ func (s *InMemoryPlayerStore) GetLeague() []Player {
 }
 
 type FileSystemPlayerStore struct {
-	Database io.ReadSeeker
+	Database io.ReadWriteSeeker
 }
 
 func (f *FileSystemPlayerStore) GetLeague() []Player {
