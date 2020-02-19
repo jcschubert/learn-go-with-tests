@@ -231,7 +231,7 @@ func TestFileSystemStore(t *testing.T) {
 		database := strings.NewReader(`[
 			{"Name": "Cleo", "Wins": 10},
 			{"Name": "Chris", "Wins": 33}]`)
-		fsStore := store.FileSystemStore{database}
+		fsStore := store.FileSystemPlayerStore{database}
 		got := fsStore.GetLeague()
 		want := []store.Player{
 			{"Cleo", 10},
@@ -243,5 +243,18 @@ func TestFileSystemStore(t *testing.T) {
 		// read again
 		got = fsStore.GetLeague()
 		assertLeague(t, got, want)
+	})
+	t.Run("get player score", func(t *testing.T) {
+		database := strings.NewReader(`[
+			{"Name": "Cleo", "Wins": 10},
+			{"Name": "Chris", "Wins": 33}]`)
+
+		fsStore := store.FileSystemPlayerStore{database}
+		got := fsStore.GetPlayerScore("Chris")
+		want := 33
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
 	})
 }

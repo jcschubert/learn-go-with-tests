@@ -35,12 +35,25 @@ func (s *InMemoryPlayerStore) GetLeague() []Player {
 	return league
 }
 
-type FileSystemStore struct {
+type FileSystemPlayerStore struct {
 	Database io.ReadSeeker
 }
 
-func (f *FileSystemStore) GetLeague() []Player {
+func (f *FileSystemPlayerStore) GetLeague() []Player {
 	f.Database.Seek(0, 0)
 	league, _ := NewLeague(f.Database)
 	return league
+}
+
+func (f *FileSystemPlayerStore) GetPlayerScore(name string) int {
+	var wins int
+
+	for _, player := range f.GetLeague() {
+		if player.Name == name {
+			wins = player.Wins
+			break
+		}
+	}
+
+	return wins
 }
