@@ -250,11 +250,13 @@ func TestFileSystemStore(t *testing.T) {
 			{"Name": "Chris", "Wins": 33}]`)
 
 		fsStore := store.FileSystemPlayerStore{database}
-		got := fsStore.GetPlayerScore("Chris")
-		want := 33
-
-		if got != want {
-			t.Errorf("got %d want %d", got, want)
-		}
+		assertScoreEquals(t, fsStore.GetPlayerScore("Chris"), 33)
 	})
+}
+
+func assertScoreEquals(t *testing.T, got int, want int) {
+	t.Helper()
+	if got != want {
+		t.Errorf("got %d want %d", got, want)
+	}
 }
